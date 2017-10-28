@@ -1,9 +1,12 @@
 package com.abnormallydriven.androidvideoplayer.common.dagger
 
+import com.abnormallydriven.androidvideoplayer.AndroidVideoPlayerApplication
+import com.abnormallydriven.androidvideoplayer.common.YoutubeApi
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -13,10 +16,19 @@ import javax.inject.Singleton
 @Module
 class HttpModule {
 
+    private val cacheSize: Long = 10 * 1024 * 1024
+
     @Provides
     @Singleton
-    fun provideOkHttpClient() : OkHttpClient{
+    fun provideDiskCache(androidVideoPlayerApplication: AndroidVideoPlayerApplication): Cache{
+        return Cache(androidVideoPlayerApplication.cacheDir, cacheSize)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(diskCache : Cache) : OkHttpClient{
         return OkHttpClient.Builder()
+                .cache(diskCache)
                 .build()
     }
 
@@ -50,6 +62,12 @@ class HttpModule {
                 .addCallAdapterFactory(rxJava2CallAdapterFactory)
                 .addConverterFactory(gsonConverterFactory)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideYoutubeApi(retrofit: Retrofit) : YoutubeApi{
+        return retrofit.create(YoutubeApi::class.java)
     }
 
 }
