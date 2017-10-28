@@ -1,7 +1,8 @@
-package com.abnormallydriven.androidvideoplayer
+package com.abnormallydriven.androidvideoplayer.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.abnormallydriven.androidvideoplayer.R
 
 class MainActivity : AppCompatActivity() {
 
