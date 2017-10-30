@@ -53,10 +53,10 @@ class VideoAdapter @Inject constructor(private val mainActivityViewModel: MainAc
         private val videoImageThumbnail : ImageView = itemView.findViewById(R.id.video_thumbnail_image_view)
 
         fun bind(video: Video) {
-            videoTitleTextView.text = video.snippet.title
+            videoTitleTextView.text = video.title
 
             Glide.with(videoImageThumbnail)
-                    .load(video.snippet.thumbnails.default.url)
+                    .load(video.thumbnailUrl)
                     .into(videoImageThumbnail)
 
         }

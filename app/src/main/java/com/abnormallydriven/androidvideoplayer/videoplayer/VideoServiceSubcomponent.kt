@@ -5,8 +5,9 @@ import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
 @ServiceScope
+@Subcomponent(modules = arrayOf(VideoModule::class))
 interface VideoServiceSubcomponent : AndroidInjector<VideoService> {
 
     @Subcomponent.Builder
-    abstract class Builder : AndroidInjector.Builder<VideoService>() {}
+    abstract class Builder : AndroidInjector.Builder<VideoService>()
 }

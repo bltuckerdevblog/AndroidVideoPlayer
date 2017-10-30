@@ -1,8 +1,7 @@
 package com.abnormallydriven.androidvideoplayer.common.dagger
 
-import javax.inject.Qualifier
+import javax.inject.Scope
 
-
-@Qualifier
+@Scope
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ServiceScope

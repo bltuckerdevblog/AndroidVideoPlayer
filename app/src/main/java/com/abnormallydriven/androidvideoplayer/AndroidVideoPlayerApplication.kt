@@ -12,7 +12,9 @@ import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
 import javax.inject.Inject
 
-class AndroidVideoPlayerApplication : Application(), HasActivityInjector, HasServiceInjector {
+class AndroidVideoPlayerApplication : Application(),
+        HasActivityInjector,
+        HasServiceInjector {
 
     val appComponent: ApplicationComponent by lazy{
         DaggerApplicationComponent.builder()

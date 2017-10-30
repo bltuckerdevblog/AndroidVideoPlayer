@@ -16,13 +16,14 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 
+@ServiceScope
 @Module
 class VideoModule {
 
     @Provides
     @ServiceScope
     fun provideSimpleExoPlayer(videoPlayerApplication: AndroidVideoPlayerApplication,
-                               trackSelector: TrackSelector) : SimpleExoPlayer{
+                               trackSelector: TrackSelector) : SimpleExoPlayer {
         val simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(videoPlayerApplication, trackSelector)
         simpleExoPlayer.playWhenReady = true
         return simpleExoPlayer
@@ -65,7 +66,7 @@ class VideoModule {
 
     @Provides
     @ServiceScope
-    fun provideDefaultExtractorsFactory(): ExtractorsFactory {
+    fun provideDefaultExtractorsFactory(): DefaultExtractorsFactory {
         return DefaultExtractorsFactory()
     }
 
