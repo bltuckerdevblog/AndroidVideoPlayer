@@ -5,7 +5,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
-interface YoutubeApi {
+interface VideoApi {
 
     @GET("videos")
     @Headers("Cache-Control: max-age=900")

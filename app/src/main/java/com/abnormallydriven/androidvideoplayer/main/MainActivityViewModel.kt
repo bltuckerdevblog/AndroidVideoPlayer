@@ -3,7 +3,7 @@ package com.abnormallydriven.androidvideoplayer.main
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.abnormallydriven.androidvideoplayer.common.YoutubeApi
+import com.abnormallydriven.androidvideoplayer.common.VideoApi
 import com.abnormallydriven.androidvideoplayer.common.dagger.UI
 import com.abnormallydriven.androidvideoplayer.common.responses.VideosResponse
 import com.abnormallydriven.androidvideoplayer.common.responses.Video
@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainActivityViewModel @Inject constructor(private val youtubeApi: YoutubeApi,
+class MainActivityViewModel @Inject constructor(private val videoApi: VideoApi,
                                                 @UI private val  uiScheduler: Scheduler) : ViewModel() {
 
     val videoLiveData : MutableLiveData<List<Video>> = MutableLiveData()
@@ -25,7 +25,7 @@ class MainActivityViewModel @Inject constructor(private val youtubeApi: YoutubeA
     fun onRefreshVideoList() {
         Log.d("debug", "Loading fresh videos")
 
-        youtubeApi.getPopularVideos()
+        videoApi.getPopularVideos()
                 .map { response: VideosResponse -> response.items.filterNotNull() }
                 .observeOn(uiScheduler)
                 .subscribe(object : SingleObserver<List<Video>>{

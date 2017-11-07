@@ -6,6 +6,7 @@ import com.abnormallydriven.androidvideoplayer.videoplayer.VideoActivityInjector
 import com.abnormallydriven.androidvideoplayer.videoplayer.VideoServiceInjectorModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Singleton
@@ -18,5 +19,8 @@ import javax.inject.Singleton
         VideoActivityInjectorModule::class,
         VideoServiceInjectorModule::class))
 interface ApplicationComponent {
+
+    fun okHttpClient(): OkHttpClient
+
     fun inject(androidVideoPlayerApplication: AndroidVideoPlayerApplication)
 }

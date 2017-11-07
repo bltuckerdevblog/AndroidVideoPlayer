@@ -1,7 +1,8 @@
 package com.abnormallydriven.androidvideoplayer.common.dagger
 
 import com.abnormallydriven.androidvideoplayer.AndroidVideoPlayerApplication
-import com.abnormallydriven.androidvideoplayer.common.YoutubeApi
+import com.abnormallydriven.androidvideoplayer.BuildConfig
+import com.abnormallydriven.androidvideoplayer.common.VideoApi
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -28,6 +29,12 @@ class HttpModule {
     @Singleton
     fun provideOkHttpClient(diskCache : Cache) : OkHttpClient{
         return OkHttpClient.Builder()
+                .addInterceptor { chain ->
+                    val requestBuilder = chain.request().newBuilder()
+                    requestBuilder.addHeader("Authorization", BuildConfig.VIDEO_STREAMER_API_KEY)
+
+                    chain.proceed(requestBuilder.build())
+                }
                 .cache(diskCache)
                 .build()
     }
@@ -58,7 +65,7 @@ class HttpModule {
 
         return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://www.googleapis.com/youtube/v3/")
+                .baseUrl(BuildConfig.VIDEO_STREAMER_BASE_URI)
                 .addCallAdapterFactory(rxJava2CallAdapterFactory)
                 .addConverterFactory(gsonConverterFactory)
                 .build()
@@ -66,8 +73,8 @@ class HttpModule {
 
     @Provides
     @Singleton
-    fun provideYoutubeApi(retrofit: Retrofit) : YoutubeApi{
-        return retrofit.create(YoutubeApi::class.java)
+    fun provideYoutubeApi(retrofit: Retrofit) : VideoApi {
+        return retrofit.create(VideoApi::class.java)
     }
 
 }

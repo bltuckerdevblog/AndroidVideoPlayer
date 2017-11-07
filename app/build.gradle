@@ -16,6 +16,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "VIDEO_STREAMER_API_KEY", VIDEO_STREAMER_API_KEY
+        buildConfigField "String", "VIDEO_STREAMER_BASE_URI", VIDEO_STREAMER_BASE_URI
+
+
     }
     buildTypes {
         release {
@@ -63,5 +67,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.0.0-rc1"
 
     implementation "com.github.bumptech.glide:glide:4.2.0"
+    kapt 'com.github.bumptech.glide:compiler:4.2.0'
+
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.2.0@aar'
 
 }
