@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.abnormallydriven.androidvideoplayer.R
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_video.*
 import javax.inject.Inject
 
 class VideoActivity : AppCompatActivity() {
@@ -21,10 +22,13 @@ class VideoActivity : AppCompatActivity() {
         val videoServiceIntent = Intent(this, VideoService::class.java)
         bindService(videoServiceIntent, videoServiceConnection, Context.BIND_AUTO_CREATE)
 
-        //read video id from intent and get ready to send it along
     }
 
-
+    override fun onStop() {
+        videoServiceConnection.stopVideo()
+        unbindService(videoServiceConnection)
+        super.onStop()
+    }
 
     companion object {
 
@@ -47,7 +51,7 @@ class VideoActivity : AppCompatActivity() {
         }
 
         videoServiceConnection.playVideo(videoId)
-
+        simpleExoplayerView.player = videoServiceConnection.getExoplayer()
     }
 
     fun onServiceDisconnected() {

@@ -7,10 +7,12 @@ import com.abnormallydriven.androidvideoplayer.common.VideoApi
 import com.abnormallydriven.androidvideoplayer.common.dagger.UI
 import com.abnormallydriven.androidvideoplayer.common.responses.VideosResponse
 import com.abnormallydriven.androidvideoplayer.common.responses.Video
+import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,7 +22,10 @@ class MainActivityViewModel @Inject constructor(private val videoApi: VideoApi,
 
     val videoLiveData : MutableLiveData<List<Video>> = MutableLiveData()
 
+    private val videoClickPublisher : PublishSubject<Video> = PublishSubject.create()
+
     private val subscriptions: CompositeDisposable = CompositeDisposable()
+
 
     fun onRefreshVideoList() {
         Log.d("debug", "Loading fresh videos")
@@ -44,8 +49,12 @@ class MainActivityViewModel @Inject constructor(private val videoApi: VideoApi,
                 })
     }
 
+    fun getObservableVideoClicks(): Observable<Video> {
+        return videoClickPublisher
+    }
+
     fun onVideoClicked(video: Video) {
-        Log.d("debug", "Clicked Video with ID: " + video.id)
+        videoClickPublisher.onNext(video)
     }
 
     override fun onCleared() {

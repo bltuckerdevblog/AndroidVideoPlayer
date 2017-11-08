@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleService
 import android.content.Intent
 import android.net.Uri
 import android.os.IBinder
+import com.abnormallydriven.androidvideoplayer.BuildConfig
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -59,8 +60,9 @@ class VideoService : LifecycleService() {
         super.onDestroy()
     }
 
-    fun playVideo(uri : Uri){
-        exoplayerController.playVideoAtUri(uri)
+    fun playVideo(videoId: String){
+        val uriString = String.format("%svideos/%s", BuildConfig.VIDEO_STREAMER_BASE_URI, videoId)
+        exoplayerController.playVideoAtUri(Uri.parse(uriString))
     }
 
     fun resume(){
@@ -69,5 +71,9 @@ class VideoService : LifecycleService() {
 
     fun pause(){
         exoplayerController.pause()
+    }
+
+    fun stopVideo() {
+        exoplayerController.stop()
     }
 }

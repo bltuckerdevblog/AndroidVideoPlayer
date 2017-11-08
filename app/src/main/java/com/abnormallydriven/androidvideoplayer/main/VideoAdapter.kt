@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.abnormallydriven.androidvideoplayer.R
+import com.abnormallydriven.androidvideoplayer.common.GlideApp
 import com.abnormallydriven.androidvideoplayer.common.dagger.ActivityScope
 import com.abnormallydriven.androidvideoplayer.common.responses.Video
 import com.bumptech.glide.Glide
@@ -55,14 +56,15 @@ class VideoAdapter @Inject constructor(private val mainActivityViewModel: MainAc
         fun bind(video: Video) {
             videoTitleTextView.text = video.title
 
-            Glide.with(videoImageThumbnail)
+            GlideApp.with(videoImageThumbnail)
                     .load(video.thumbnailUrl)
+                    .override(300,300)
                     .into(videoImageThumbnail)
 
         }
 
         fun unbind(){
-            Glide.with(videoImageThumbnail).clear(videoTitleTextView)
+            GlideApp.with(videoImageThumbnail).clear(videoTitleTextView)
         }
 
     }

@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.os.IBinder
 import com.abnormallydriven.androidvideoplayer.common.dagger.ActivityScope
+import com.google.android.exoplayer2.SimpleExoPlayer
 import javax.inject.Inject
 
 @ActivityScope
@@ -24,7 +25,15 @@ class VideoServiceConnection @Inject constructor(private val videoActivity: Vide
     }
 
     fun playVideo(videoId: String) {
-        //TODO play video
+        videoService?.playVideo(videoId)
+    }
+
+    fun getExoplayer(): SimpleExoPlayer? {
+        return videoService?.exoplayerController?.simpleExoPlayer
+    }
+
+    fun stopVideo() {
+        videoService?.stopVideo()
     }
 
 

@@ -12,7 +12,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import javax.inject.Inject
 
 @ServiceScope
-class ExoplayerController @Inject constructor(private val simpleExoPlayer: SimpleExoPlayer,
+class ExoplayerController @Inject constructor(val simpleExoPlayer: SimpleExoPlayer,
                                               private val defaultDataSourceFactory: DefaultDataSourceFactory,
                                               private val defaultExtractorsFactory: DefaultExtractorsFactory) :
 Player.EventListener{
