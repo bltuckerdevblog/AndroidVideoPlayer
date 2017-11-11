@@ -3,6 +3,7 @@ package com.abnormallydriven.androidvideoplayer.videoplayer
 import android.app.Service
 import android.arch.lifecycle.LifecycleService
 import android.content.Intent
+import android.media.session.MediaSession
 import android.net.Uri
 import android.os.IBinder
 import com.abnormallydriven.androidvideoplayer.BuildConfig
@@ -21,6 +22,12 @@ class VideoService : LifecycleService() {
 
     @Inject
     lateinit var videoserviceLockDelegate : VideoServiceLockDelegate
+
+    @Inject
+    lateinit var mediaSession : MediaSession
+
+    @Inject
+    lateinit var videoServiceMediaSessionCallback : VideoServiceMediaSessionCallback
 
     override fun onBind(intent: Intent): IBinder? {
         super.onBind(intent)
@@ -42,16 +49,11 @@ class VideoService : LifecycleService() {
         AndroidInjection.inject(this)
         super.onCreate()
         lifecycle.addObserver(videoserviceLockDelegate)
-
-        //setup media session compat
-        //setup the exoplayer
-
+        mediaSession.setCallback(videoServiceMediaSessionCallback)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        //TODO handle commands like play/pause
-
         return Service.START_NOT_STICKY
     }
 

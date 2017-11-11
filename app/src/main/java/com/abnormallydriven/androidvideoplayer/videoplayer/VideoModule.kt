@@ -1,12 +1,12 @@
 package com.abnormallydriven.androidvideoplayer.videoplayer
 
+import android.media.session.MediaSession
 import com.abnormallydriven.androidvideoplayer.AndroidVideoPlayerApplication
 import com.abnormallydriven.androidvideoplayer.common.dagger.ServiceScope
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.extractor.ExtractorsFactory
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelector
@@ -19,6 +19,12 @@ import okhttp3.OkHttpClient
 @ServiceScope
 @Module
 class VideoModule {
+
+    @Provides
+    @ServiceScope
+    fun provideMediaSession(videoService: VideoService): MediaSession {
+        return MediaSession(videoService, "VideoService")
+    }
 
     @Provides
     @ServiceScope
