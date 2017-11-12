@@ -57,8 +57,6 @@ Player.EventListener{
 
         val message = String.format("onPlayerStateChanged playWhenReady: %b , playbackState: %s", playWhenReady, stateString)
         Log.d("exoplayer", message)
-
-
     }
 
     override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {

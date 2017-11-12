@@ -28,9 +28,9 @@ class VideoModule {
 
     @Provides
     @ServiceScope
-    fun provideSimpleExoPlayer(videoPlayerApplication: AndroidVideoPlayerApplication,
+    fun provideSimpleExoPlayer(videoService : VideoService,
                                trackSelector: TrackSelector) : SimpleExoPlayer {
-        val simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(videoPlayerApplication, trackSelector)
+        val simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(videoService, trackSelector)
         simpleExoPlayer.playWhenReady = true
         return simpleExoPlayer
     }
@@ -51,10 +51,10 @@ class VideoModule {
 
     @Provides
     @ServiceScope
-    fun provideDataSourceFactory(videoPlayerApplication: AndroidVideoPlayerApplication,
+    fun provideDataSourceFactory(videoService: VideoService,
                                  defaultBandwidthMeter: DefaultBandwidthMeter,
                                  okHttpDataSourceFactory: OkHttpDataSourceFactory): DefaultDataSourceFactory {
-        return DefaultDataSourceFactory(videoPlayerApplication, defaultBandwidthMeter, okHttpDataSourceFactory)
+        return DefaultDataSourceFactory(videoService, defaultBandwidthMeter, okHttpDataSourceFactory)
     }
 
     @Provides
