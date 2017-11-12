@@ -12,7 +12,7 @@ import javax.inject.Inject
 class VideoActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var videoServiceConnection : VideoServiceConnection
+    lateinit var videoServiceConnection: VideoServiceConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -30,6 +30,22 @@ class VideoActivity : AppCompatActivity() {
         super.onStop()
     }
 
+
+    fun onServiceConnected() {
+        val videoId: String = intent.extras.getString(VIDEO_ID_INTENT_KEY, "")
+
+        if (videoId.isEmpty()) {
+            return
+        }
+
+        videoServiceConnection.playVideo(videoId)
+        simpleExoplayerView.player = videoServiceConnection.getExoplayer()
+    }
+
+    fun onServiceDisconnected() {
+
+    }
+
     companion object {
 
         private val VIDEO_ID_INTENT_KEY = "videoId"
@@ -40,21 +56,6 @@ class VideoActivity : AppCompatActivity() {
 
             return intent
         }
-
-    }
-
-    fun onServiceConnected() {
-        val videoId : String = intent.extras.getString(VIDEO_ID_INTENT_KEY, "")
-
-        if(videoId.isEmpty()){
-            return
-        }
-
-        videoServiceConnection.playVideo(videoId)
-        simpleExoplayerView.player = videoServiceConnection.getExoplayer()
-    }
-
-    fun onServiceDisconnected() {
 
     }
 }
