@@ -58,6 +58,7 @@ class VideoService : LifecycleService() {
     }
 
     override fun onDestroy() {
+        mediaSession.release()
         exoplayerController.releasePlayer()
         super.onDestroy()
     }
